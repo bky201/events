@@ -1,8 +1,11 @@
 .Button {
-    font-size: 0.8rem;
+    font-size: 1.0rem;
     align-self: center;
     border-radius: 100px;
-    border-color: transparent;
+    color: white;
+    background-color: black;
+    border-width: 3px;
+    border-color: white;
     padding: 4px 10px;
     margin-left: 2px;
     margin-right: 2px;
