@@ -13,6 +13,7 @@ const ThreeDots = React.forwardRef(({ onClick }, ref) => (
     }}
   />
 ));
+ThreeDots.displayName = "ThreeDots";
 
 export const MoreDropdown = ({ handleEdit, handleDelete }) => {
   return (
@@ -52,7 +53,9 @@ export function ProfileEditDropdown({ id }) {
           onClick={() => history.push(`/profiles/${id}/edit`)}
           aria-label="edit-profile"
         >
-          <i className="fas fa-edit" /> edit profile
+          <i className="fas fa-edit" /> 
+          {" "}
+          edit profile
         </Dropdown.Item>
         <Dropdown.Item
           onClick={() => history.push(`/profiles/${id}/edit/username`)}
@@ -67,6 +70,14 @@ export function ProfileEditDropdown({ id }) {
         >
           <i className="fas fa-key" />
           change password
+        </Dropdown.Item>
+        <Dropdown.Item
+          // sends user to the create artist form
+          onClick={() => history.push("/artists/create")}
+          aria-label="add-artist"
+        >
+          <i className="fas fa-plus-square" />
+          register as artist
         </Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>

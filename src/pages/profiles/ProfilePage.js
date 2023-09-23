@@ -13,7 +13,7 @@ import btnStyles from "../../styles/Button.module.css";
 import PopularProfiles from "./PopularProfiles";
 import { useCurrentUser } from "../../contexts/CurrentUserContext";
 import { useParams } from "react-router-dom";
-import { axiosReq } from "../../api/axiosDefaults";
+import { axiosReq, axiosRes } from "../../api/axiosDefaults";
 import {
   useProfileData,
   useSetProfileData,
@@ -25,42 +25,70 @@ import { fetchMoreData } from "../../utils/utils";
 import NoResults from "../../assets/no-results.png";
 import { ProfileEditDropdown } from "../../components/MoreDropdown";
 
+import Artist from "../artists/Artist";
+import axios from "axios";
+import Modal from "react-bootstrap/Modal";
+
 function ProfilePage() {
   const [hasLoaded, setHasLoaded] = useState(false);
   const [profilePosts, setProfilePosts] = useState({ results: [] });
+  const [artistData, setArtistData] = useState(null);
   const currentUser = useCurrentUser();
   const { id } = useParams();
   const {setProfileData, handleFollow, handleUnfollow} = useSetProfileData();
   const { pageProfile } = useProfileData();
   const [profile] = pageProfile.results;
   const is_owner = currentUser?.username === profile?.owner;
+  const artistId = profile?.artistId;
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  const handleDeleteArtist = async () => {
+    try {
+      await axios.delete(`/artists/${artistId}`);
+      await axiosRes.put(`/profiles/${id}/`, { artistId: null });
+      setArtistData(null);
+    } catch (err) {}
+    handleClose();
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
+    const handleMount = async () => {
       try {
-        const [{ data: pageProfile }, { data: profilePosts }] =
-          await Promise.all([
-            axiosReq.get(`/profiles/${id}`),
-            axiosReq.get(`/posts/?owner__profile=${id}`),
-          ]);
+        const [{ data: pageProfile }, { data: profilePosts }] = await Promise.all([
+          axiosReq.get(`/profiles/${id}`),
+          axiosReq.get(`/posts/?owner__profile=${id}`),
+        ]);
         setProfileData((prevState) => ({
           ...prevState,
           pageProfile: { results: [pageProfile] },
         }));
-
         setProfilePosts(profilePosts);
-
+        try {
+          const { data } = await axiosReq.get(`/artists/${artistId}`);
+          setArtistData(data);
+        } catch (err) {
+          setArtistData(null);
+        }
         setHasLoaded(true);
       } catch (err) {
-        console.log(err);
+        setArtistData(null);
       }
     };
-    fetchData();
-  }, [id, setProfileData]);
+    handleMount();
+  }, [id, setProfileData, artistId]);
 
   const mainProfile = (
     <>
-    {profile?.is_owner && <ProfileEditDropdown id={profile?.id} />}
+    {profile?.is_owner && (
+    <ProfileEditDropdown 
+    id={profile?.id} 
+    handleDeleteArtist={handleDeleteArtist}
+    />
+    )}
       <Row noGutters className="px-3 text-center">
         <Col lg={3} className="text-lg-left">
           <Image
@@ -71,6 +99,7 @@ function ProfilePage() {
         </Col>
         <Col lg={6}>
           <h3 className="m-2">{profile?.owner}</h3>
+          {profile?.artistId && <p>I am an artist</p>}
           <Row className="justify-content-center no-gutters">
             <Col xs={3} className="my-2">
               <div>{profile?.posts_count}</div>
@@ -135,22 +164,48 @@ function ProfilePage() {
   );
 
   return (
-    <Row>
+    <Row className="d-flex justify-content-center">
       <Col className="py-2 p-0 p-lg-2" lg={8}>
-        <PopularProfiles mobile />
+        <p className="text-center">Most followed profiles.</p>
+        <PopularProfiles />
         <Container className={appStyles.Content}>
           {hasLoaded ? (
             <>
               {mainProfile}
+              {profile?.artistId && is_owner && (
+                <Button className={`${btnStyles.Button} mb-2`} onClick={handleShow}>
+                  Remove as artist
+                </Button>
+              )}
+              <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                  <Modal.Title>Confirm Delete</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  Are you sure you want to delete your artist profile?
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button variant="secondary" onClick={handleClose}>
+                    Cancel
+                  </Button>
+                  <Button
+                    className={btnStyles.Button}
+                    onClick={handleDeleteArtist}
+                  >
+                    Confirm
+                  </Button>
+                </Modal.Footer>
+              </Modal>
+              {artistData && (
+                <Artist {...artistData} isProfilePage showAll />
+              )}
+
               {mainProfilePosts}
             </>
           ) : (
             <Asset spinner />
           )}
         </Container>
-      </Col>
-      <Col lg={4} className="d-none d-lg-block p-0 p-lg-2">
-        <PopularProfiles />
       </Col>
     </Row>
   );

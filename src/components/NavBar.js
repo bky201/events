@@ -53,6 +53,14 @@ const NavBar = () => {
       >
         <i className="fas fa-heart"></i>Liked
       </NavLink>
+      <NavLink
+        className={styles.NavLink}
+        activeClassName={styles.Active}
+        to="/artists"
+      >
+        <i className="fas fa-palette" />
+        Artists
+      </NavLink>
       <NavLink className={styles.NavLink} 
       to="/" 
       onClick={handleSignOut}>
