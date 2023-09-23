@@ -16,6 +16,8 @@ import UserPasswordForm from "./pages/profiles/UserPasswordForm";
 import ProfileEditForm from "./pages/profiles/ProfileEditForm";
 import ArtistCreateForm from "./pages/artists/ArtistCreateForm";
 import ArtistsPage from "./pages/artists/ArtistsPage";
+import ReviewCreateForm from "./pages/reviews/ReviewCreateForm";
+import ReviewsPage from "./pages/reviews/ReviewsPage";
 
 function App() {
   const currentUser = useCurrentUser();
@@ -83,6 +85,16 @@ function App() {
             exact
             path="/artists/create"
             render={() => <ArtistCreateForm /> } 
+          />
+          <Route 
+          exact
+          path="/reviews/:id/create"
+          render={() => <ReviewCreateForm />}
+          />
+          <Route 
+          exact
+          path="/reviews/:id"
+          render={() => <ReviewsPage />}
           />
           <Route render={() => <p>Page not found!</p>} />
         </Switch>

@@ -9,10 +9,11 @@ import appStyles from "../../App.module.css";
 import btnStyles from "../../styles/Button.module.css";
 import { axiosReq, axiosRes } from "../../api/axiosDefaults";
 import { useCurrentUser } from "../../contexts/CurrentUserContext";
+import useRedirect from "../../hooks/useRedirect";
 
 // Form to gather and post data to database for a new artist registration
 const ArtistCreateForm = () => {
-  
+  useRedirect("loggedOut");
   const [errors, setErrors] = useState({});
   const currentUser = useCurrentUser();
   const id = currentUser?.profile_id;

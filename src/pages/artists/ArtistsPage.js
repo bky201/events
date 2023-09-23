@@ -50,7 +50,7 @@ const ArtistsPage = ({ message, filter = "" }) => {
 
   return (
     <Row className="h-100 d-flex justify-content-center">
-      <Col className="py-2 p-0 p-lg-2" lg={8}>
+      <Col className="py-2 p-0 p-lg-2" lg={4}>
         <p className="text-center">Most followed profiles.</p>
         <PopularProfiles />
         <i className={`fas fa-search ${styles.SearchIcon}`} />
@@ -66,7 +66,8 @@ const ArtistsPage = ({ message, filter = "" }) => {
             placeholder="Search artist by name, location or speciality"
           />
         </Form>
-
+        </Col>
+        <Col className="py-2 p-0 p-lg-2" lg={8}>
         {hasLoaded ? (
           <>
             <h1>Artists</h1>

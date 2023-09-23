@@ -2,7 +2,7 @@ import React from "react";
 import Card from "react-bootstrap/Card";
 import Media from "react-bootstrap/Media";
 
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import { Rating } from "react-simple-star-rating";
 import Avatar from "../../components/Avatar";
@@ -13,6 +13,7 @@ import styles from "../../styles/Post.module.css";
 // component renders artist information and statistics
 const Artist = (props) => {
   const {
+    id,
     owner,
     profile_id,
     profile_image,
@@ -29,6 +30,7 @@ const Artist = (props) => {
 
   const currentUser = useCurrentUser();
   const is_owner = currentUser?.username === owner;
+  const history = useHistory();
 
   return (
     <Card className={styles.Post}>
@@ -66,7 +68,7 @@ const Artist = (props) => {
         {!is_owner && (
           <Button 
             className={btnStyles.Button}
-            onClick={() => {}}
+            onClick={() => history.push(`/reviews/${id}/create`)}
             aria-label="create-review"
           >
             Leave a review
@@ -75,7 +77,7 @@ const Artist = (props) => {
         {showAll && 
         <Button
             className={btnStyles.Button}
-            onClick={() => {}}
+            onClick={() => history.push(`/reviews/${id}`)}
             aria-label="view-reviews"
         >
             Artist Reviews
