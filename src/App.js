@@ -18,6 +18,7 @@ import ArtistCreateForm from "./pages/artists/ArtistCreateForm";
 import ArtistsPage from "./pages/artists/ArtistsPage";
 import ReviewCreateForm from "./pages/reviews/ReviewCreateForm";
 import ReviewsPage from "./pages/reviews/ReviewsPage";
+import ContactCreateForm from "./pages/contacts/ContactCreateForm";
 
 function App() {
   const currentUser = useCurrentUser();
@@ -95,6 +96,11 @@ function App() {
           exact
           path="/reviews/:id"
           render={() => <ReviewsPage />}
+          />
+          <Route 
+          exact
+          path="/contact/create"
+          render={() => <ContactCreateForm />} 
           />
           <Route render={() => <p>Page not found!</p>} />
         </Switch>

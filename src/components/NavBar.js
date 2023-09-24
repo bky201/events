@@ -56,6 +56,13 @@ const NavBar = () => {
       <NavLink
         className={styles.NavLink}
         activeClassName={styles.Active}
+        to="/contact/create"
+      >
+        <i className="fa-solid fa-file-signature"></i>Contact Us
+      </NavLink>
+      <NavLink
+        className={styles.NavLink}
+        activeClassName={styles.Active}
         to="/artists"
       >
         <i className="fas fa-palette" />
@@ -122,7 +129,6 @@ const NavBar = () => {
             >
               <i className="fas fa-home"></i>Home
             </NavLink>
-
             { currentUser ? loggedInIcons : loggedOutIcons }
             { console.log('currentUser:', currentUser) }
           </Nav>
