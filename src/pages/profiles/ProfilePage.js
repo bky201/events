@@ -10,7 +10,6 @@ import styles from "../../styles/ProfilePage.module.css";
 import appStyles from "../../App.module.css";
 import btnStyles from "../../styles/Button.module.css";
 
-import PopularProfiles from "./PopularProfiles";
 import { useCurrentUser } from "../../contexts/CurrentUserContext";
 import { useParams } from "react-router-dom";
 import { axiosReq, axiosRes } from "../../api/axiosDefaults";
@@ -166,8 +165,6 @@ function ProfilePage() {
   return (
     <Row className="d-flex justify-content-center">
       <Col className="py-2 p-0 p-lg-2" lg={8}>
-        <p className="text-center">Most followed profiles.</p>
-        <PopularProfiles />
         <Container className={appStyles.Content}>
           {hasLoaded ? (
             <>
