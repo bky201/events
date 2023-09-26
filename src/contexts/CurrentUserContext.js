@@ -28,7 +28,7 @@ export const CurrentUserProvider = ({ children }) => {
   }, []);
 
   useMemo(() => {
-    axiosReq.interceptors.request.use(
+    axiosReq?.interceptors.request.use(
       async (config) => {
         if (shouldRefreshToken) {
           try {
@@ -51,7 +51,7 @@ export const CurrentUserProvider = ({ children }) => {
       }
     );
 
-    axiosRes.interceptors.response.use(
+    axiosRes?.interceptors.response.use(
       (response) => response,
       async (err) => {
         if (err.response?.status === 401) {
