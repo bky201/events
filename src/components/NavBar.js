@@ -130,7 +130,6 @@ const NavBar = () => {
               <i className="fas fa-home"></i>Home
             </NavLink>
             { currentUser ? loggedInIcons : loggedOutIcons }
-            { console.log('currentUser:', currentUser) }
           </Nav>
         </Navbar.Collapse>
       </Container>
