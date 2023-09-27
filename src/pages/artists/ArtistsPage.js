@@ -51,8 +51,10 @@ const ArtistsPage = ({ message, filter = "" }) => {
   return (
     <Row className="h-100 d-flex justify-content-center">
       <Col className="d-none d-lg-block p-0 p-lg-2" lg={4}>
-        
-        <i className={`fas fa-search ${styles.SearchIcon}`} />
+        <PopularProfiles /> 
+        </Col>
+        <Col className="py-2 p-0 p-lg-2" lg={8}>
+        <i className={`fas fa-search ${styles.SearchIcon}`}/>
         <Form
           className={styles.SearchBar}
           onSubmit={(event) => event.preventDefault()}
@@ -65,10 +67,6 @@ const ArtistsPage = ({ message, filter = "" }) => {
             placeholder="Search artist by name, location or speciality"
           />
         </Form>
-        <p className="text-center">Most followed profiles.</p>
-        <PopularProfiles /> 
-        </Col>
-        <Col className="py-2 p-0 p-lg-2" lg={8}>
           <PopularProfiles mobile/>
         {hasLoaded ? (
           <>
