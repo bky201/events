@@ -14,7 +14,6 @@ import { axiosReq } from "../../api/axiosDefaults";
 
 import NoResults from "../../assets/no-results.png";
 import { fetchMoreData } from "../../utils/utils";
-import PopularProfiles from "../profiles/PopularProfiles";
 import { useCurrentUser } from "../../contexts/CurrentUserContext";
 
 import Artist from "../artists/Artist";
@@ -54,8 +53,6 @@ const ReviewsPage = ({ message }) => {
   return (
     <Row className="h-100 d-flex justify-content-center">
       <Col className="py-2 p-0 p-lg-2" lg={8}>
-        <p className="text-center">Most followed profiles.</p>
-        <PopularProfiles />
 
         <Artist {...artistData} isProfilePage={false} />
 
