@@ -19,6 +19,7 @@ import ArtistsPage from "./pages/artists/ArtistsPage";
 import ReviewCreateForm from "./pages/reviews/ReviewCreateForm";
 import ReviewsPage from "./pages/reviews/ReviewsPage";
 import ContactCreateForm from "./pages/contacts/ContactCreateForm";
+import NotFound from "./components/NotFound";
 
 function App() {
   const currentUser = useCurrentUser();
@@ -102,7 +103,7 @@ function App() {
           path="/contact/create"
           render={() => <ContactCreateForm />} 
           />
-          <Route render={() => <p>Page not found!</p>} />
+          <Route render={() => <NotFound />} />
         </Switch>
       </Container>
     </div>
